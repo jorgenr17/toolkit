@@ -152,8 +152,8 @@ const mutations = {
   },
   addCognitiveModel: (state, CognitiveModel) => {
     let cognitiveModel = { name: CognitiveModel.data.nombre, id: CognitiveModel.id }
-    state.application.user.cms.push(CognitiveModel.id)
-    state.application.currentsCms.push(cognitiveModel)
+    state.application.user.cms.push(cognitiveModel)
+    // state.application.currentsCms.push(cognitiveModel)
   },
   mode: (state, mode) => {
     state.mode = mode

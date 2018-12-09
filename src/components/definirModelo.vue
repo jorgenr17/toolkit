@@ -10,7 +10,7 @@
       <v-flex column xs12 sm12 md12 class="py-3">
         <v-card light hover style="border-color: black">
           <v-card-title primary-title>
-            <!-- {{$store.state.app.application.user}} -->
+            {{$store.state.app.application.user.cms}}
             <div class="headline">Datos del Modelo</div>
           </v-card-title>
           <!-- nombre del modelo -->
@@ -45,7 +45,7 @@ export default {
   data: () => ({
     palabraClave: '',
     loading: false,
-    url: 'http://192.168.1.10:3000',
+    url: 'http://localhost:3000',
     text: 'Ejemplo: Rubro / Palabras agregadas: ',
     perH: false
   }),

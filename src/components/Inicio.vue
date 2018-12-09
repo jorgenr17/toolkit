@@ -47,7 +47,7 @@ export default {
       enlace,
       titulo,
       socket: null,
-      url: 'http://192.168.1.10:3000'
+      url: 'http://localhost:3000'
     }
   },
   methods: {

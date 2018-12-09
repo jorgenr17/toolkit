@@ -24,7 +24,7 @@
 			<v-card light hover style="border-color: black">
 				<v-card-text>
 					<div class="text-xs-center">
-						<v-layout row v-for="(cm, index) in this.$store.state.app.application.currentsCms" :key="index" align-center>
+						<v-layout row v-for="(cm, index) in this.$store.state.app.application.user.cms" :key="index" align-center>
 							<v-flex xs7 sm7 md7>
 								<v-subheader>{{cm.name}}</v-subheader>
 							</v-flex>

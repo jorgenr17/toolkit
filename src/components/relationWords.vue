@@ -86,7 +86,7 @@ export default {
     word: '',
     category: '',
     category2: '',
-    url: 'http://192.168.1.10:3000'
+    url: 'http://localhost:3000'
   }),
   methods: {
     showChild (index) {
