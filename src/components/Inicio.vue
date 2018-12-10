@@ -60,6 +60,7 @@ export default {
         this.$store.commit('app/carinaToken', data.token)
       })
       this.socket.on('returnDataWithKeyWords', (data) => {
+        console.log(data)
         this.$store.commit('app/response', data)
         EventBus.$emit('loading', false)
       })

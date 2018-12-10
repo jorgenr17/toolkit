@@ -38,8 +38,7 @@ export default {
   },
   methods: {
     activeMode (mode) {
-      this.$store.commit('app/mode', mode)
-      this.$router.push('/steps')
+      this.$store.dispatch('app/mode', mode)
     }
   },
   components: { toolbar }

@@ -7,18 +7,18 @@
 					<v-card-title class="gray">
 						<span class="headline black--text">Registrarme</span>
 					</v-card-title>
-					<v-form ref="form" v-model="valid" lazy-validation>
+					<v-form ref="form" lazy-validation>
 						<v-flex xs12 sm10 md10>
-							<v-text-field label="Correo Electrónico" v-model="$store.state.app.application.user.email" :rules="emailRules" required></v-text-field>
+							<v-text-field label="Correo Electrónico" v-model="email" :rules="emailRules" required></v-text-field>
 						</v-flex>
 						<v-flex xs12 sm10 md10>
-							<v-text-field :type="'password'" v-model="$store.state.app.application.user.password" :rules="passwordRules" label="Contraseña" required></v-text-field>
+							<v-text-field :type="'password'" v-model="password" :rules="passwordRules" label="Contraseña" required></v-text-field>
 						</v-flex>
 						<v-flex xs12 sm10 md10>
-							<v-text-field label="Entidad" v-model="$store.state.app.application.user.entity" :rules="usuarioRules" required></v-text-field>
+							<v-text-field label="Entidad" v-model="entity" :rules="usuarioRules" required></v-text-field>
 						</v-flex>
 						<v-flex xs12 sm10 md10>
-							<v-text-field label="Localización" v-model="$store.state.app.application.user.location" :rules="usuarioRules" required></v-text-field>
+							<v-text-field label="Localización" v-model="location" :rules="usuarioRules" required></v-text-field>
 						</v-flex>
 						<v-btn :disabled="!valid" @click="registerme">Registrarme</v-btn>
 						<v-btn @click="clear">Limpiar Datos</v-btn>
@@ -38,7 +38,10 @@ export default {
   name: 'Registro',
   data () {
     return {
-      valid: true,
+      email: '',
+      password: '',
+      location: '',
+      entity: '',
       usuarioRules: [v => !!v || 'Usuario requerido'],
       passwordRules: [v => !!v || 'Contraseña requerida'],
       emailRules: [
@@ -53,6 +56,7 @@ export default {
       this.$refs.form.reset()
     },
     registerme () {
+      this.$store.commit('app/registerData', { email: this.email, password: this.password, location: this.location, entity: this.entity })
       EventBus.$emit('loading', true)
       db.collection('users').where('email', '==', this.$store.state.app.application.user.email).get().then(doc => {
         if (doc.docs[0]) {
@@ -64,6 +68,7 @@ export default {
             } catch (error) {
               console.log(error)
             } finally {
+              this.clear()
               EventBus.$emit('loading', false)
               this.$router.push('/')
             }
@@ -71,6 +76,15 @@ export default {
           .catch(error => alert('Error al registrar el usuario: ', error))
         }
       }).catch(error => alert('Error al verificar el usuario: ', error))
+    }
+  },
+  computed: {
+    valid () {
+      if (this.email !== '' && /.+@.+/.test(this.email) === true && this.password !== '') {
+        return true
+      } else {
+        return false
+      }
     }
   },
   components: { toolbar }

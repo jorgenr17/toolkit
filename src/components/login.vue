@@ -7,12 +7,12 @@
 					<v-card-title class="gray">
 						<span class="headline black--text">Bienvenido!</span>
 					</v-card-title>
-					<v-form ref="form" v-model="valid" lazy-validation>
+					<v-form ref="form" lazy-validation>
 						<v-flex xs12 sm10 md10>
-							<v-text-field label="Correo Electrónico" v-model="$store.state.app.application.user.email" :rules="emailRules" required ></v-text-field>
+							<v-text-field label="Correo Electrónico" v-model="email" :rules="emailRules" required ></v-text-field>
 						</v-flex>
 						<v-flex xs12 sm10 md10>
-							<v-text-field :type="show ? 'text' : 'password'" v-model="$store.state.app.application.user.password" :append-icon="show ? 'visibility_off' : 'visibility'" :rules="passwordRules" label="Contraseña" @click:append="show = !show" required ></v-text-field>
+							<v-text-field :type="show ? 'text' : 'password'" v-model="password" :append-icon="show ? 'visibility_off' : 'visibility'" :rules="passwordRules" label="Contraseña" @click:append="show = !show" required ></v-text-field>
 						</v-flex>
 						<v-btn :disabled="!valid" @click="login">Entrar</v-btn>
 						<v-btn @click="clear">Limpiar Datos</v-btn>
@@ -35,13 +35,14 @@ export default {
   mounted () {},
   data () {
     return {
-      valid: true,
       show: false,
+      email: '',
+      password: '',
       url: 'http://localhost:3000',
       passwordRules: [v => !!v || 'Contraseña requerida'],
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid'
+        v => !!v || 'Se requiere una cuenta de correo electrónico.',
+        v => /.+@.+/.test(v) || 'Correo electrónico invalido.'
       ]
     }
   },
@@ -50,13 +51,15 @@ export default {
       this.$refs.form.reset()
     },
     login () {
+      this.$store.commit('app/loginData', { email: this.email, password: this.password })
       EventBus.$emit('loading', true)
-      db.collection('users').where('email', '==', this.$store.state.app.application.user.email).where('password', '==', this.$store.state.app.application.user.password).get().then((doc) => {
+      db.collection('users').where('email', '==', this.email).where('password', '==', this.password).get().then((doc) => {
         if (doc.docs[0]) {
           let user = doc.docs[0]
           try {
             this.$store.dispatch('app/login', {data: user.data(), id: user.id})
           } finally {
+            this.clear()
             EventBus.$emit('loading', false)
             this.$router.push('/')
           }
@@ -67,6 +70,15 @@ export default {
           }
         }
       }).catch(error => alert('Error al verificar el usuario:', error))
+    }
+  },
+  computed: {
+    valid () {
+      if (this.email !== '' && /.+@.+/.test(this.email) === true && this.password !== '') {
+        return true
+      } else {
+        return false
+      }
     }
   },
   components: { toolbar, EventBus }

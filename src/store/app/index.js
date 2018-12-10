@@ -97,9 +97,11 @@ const state = {
     descripcion: '',
     palabrasClave: [],
     palabrasRelevantes: [],
-    palabrasCandidatas: [],
-    palabrasDescartadas: [],
-    categorias: []
+    palabrasCandidatas: ['peligro', 'pero'],
+    palabrasDescartadas: ['el', 'la', 'los'],
+    categorias: [],
+    dependencias: [],
+    palabrasCompuestas: []
   },
   registro: {
     fecha: '', // no va analisis
@@ -112,7 +114,9 @@ const state = {
     palabrasClave: [],
     palabrasCandidatas: [],
     palabrasRelevantes: [],
-    categorias: []
+    palabrasCompuestas: [],
+    categorias: [],
+    verbosSolicitudes: []
   },
   registros: [],
   relaciones: [],
@@ -155,10 +159,6 @@ const mutations = {
     state.application.user.cms.push(cognitiveModel)
     // state.application.currentsCms.push(cognitiveModel)
   },
-  mode: (state, mode) => {
-    state.mode = mode
-    console.log(state.mode)
-  },
   discardWord: (state, obj) => {
     state.contexto[obj.key2].push(obj.value)
     let index = state.contexto[obj.key1].indexOf(obj.value)
@@ -173,6 +173,21 @@ const mutations = {
   },
   asignWord: (state, obj) => {
     state.relaciones[obj.child].temasDeInteres[obj.category].palabrasRelevantes.push(obj.word)
+  },
+  mode: (state, mode) => {
+    state.application.mode = mode
+    EventBus.$emit('loading', false)
+    router.push('/steps')
+  },
+  loginData: (state, data) => {
+    state.application.user.email = data.email
+    state.application.user.password = data.password
+  },
+  registerData: (state, data) => {
+    state.application.user.email = data.email
+    state.application.user.password = data.password
+    state.application.user.entity = data.entity
+    state.application.user.location = data.location
   }
 }
 
@@ -223,6 +238,7 @@ const actions = {
     db.collection('cognitiveModels').doc(context.state.application.currentCognitiveModel).update(context.state.contexto).then(updt => EventBus.$emit('loading', false))
   },
   relationedWords (context, link) {
+    console.log(context.state.relaciones)
     axios.defaults.headers.common['Authorization'] = context.state.application.user.carinaToken
     axios.post(`${link}/c/relationedWords`, context.state.relaciones).then(response => console.log(response.data)).catch(err => console.error(err))
     EventBus.$emit('loading', false)
@@ -236,10 +252,32 @@ const actions = {
         }
         context.state.relaciones.push(a)
       })
-      console.log(context.state.relaciones)
+      // console.log(context.state.relaciones)
     } finally {
       EventBus.$emit('loading', false)
       router.push('/UsingIA/temasDeInteres')
+    }
+  },
+  mode (context, mode) {
+    if (mode === 'DEMO' && context.state.application.authenticated !== true) {
+      EventBus.$emit('loading', true)
+      try {
+        db.collection('users').where('email', '==', 'superusuario@gmail.com').where('password', '==', 'superusuario').get().then((doc) => {
+          if (doc.docs[0]) {
+            let user = doc.docs[0]
+            context.state.application.user = user.data()
+            context.state.application.user.token = user.id
+          } else {
+            alert('no existe superusuario')
+          }
+        }).catch(error => alert('Error al verificar el usuario:', error))
+      } catch (error) {
+        console.error(error)
+      } finally {
+        context.commit('mode', mode)
+      }
+    } else {
+      context.commit('mode', mode)
     }
   }
 }

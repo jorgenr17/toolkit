@@ -5,7 +5,7 @@
 			<div class="text-xs-center mt-5 pt-5">
 				<v-btn @click="router('/UsingIA/PrepararDatos')" flat color="transparent"><v-progress-circular :size="250" :width="20" value="Cargar Datos" color="accent">Cargar Datos
 				</v-progress-circular></v-btn>
-				<v-btn @click="router('/UsingIA/DefinirModelo')" flat color="transparent"><v-progress-circular :size="250" :width="20" value="Entrenar Modelo" color="primary">Entrenar Modelo
+				<v-btn @click="router('/UsingIA/palabraClave')" flat color="transparent"><v-progress-circular :size="250" :width="20" value="Entrenar Modelo" color="primary">Entrenar Modelo
 				</v-progress-circular></v-btn>
 				<v-btn @click="" flat color="transparent"><v-progress-circular :size="250" :width="20" value="Probar Modelo" color="secondary">Probar Modelo
 				</v-progress-circular></v-btn>
