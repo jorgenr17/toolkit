@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <loading v-if="loading"/>
+    <errorMessage v-if="errorMessage" :message="message"/>
     <!-- <v-content height="auto"> -->
       <router-view/>
     <!-- </v-content> -->
@@ -13,12 +14,20 @@ import logoToolkit from '@/assets/logoToolkit.svg'
 // import footerToolkit from '@/components/footer'
 import loading from '@/components/loading'
 import EventBus from '@/components/EventBus'
-import './stylus/main.styl'
+import errorMessage from '@/components/errorMessage'
+// import './stylus/main.styl'
 
 export default {
   mounted () {
     EventBus.$on('loading', value => {
       this.loading = value
+    })
+    EventBus.$on('errorMessage', data => {
+      try {
+        this.message = data
+      } finally {
+        this.errorMessage = data.boolean
+      }
     })
   },
   data () {
@@ -28,7 +37,9 @@ export default {
       drawer: true,
       logo: logoToolkit,
       socket: null,
+      errorMessage: false,
       loading: false,
+      message: null,
       items: [{
         icon: 'bubble_chart',
         title: 'Inspire'
@@ -45,6 +56,6 @@ export default {
     }
   },
   name: 'App',
-  components: { loading }
+  components: { loading, errorMessage }
 }
 </script>

@@ -12,7 +12,7 @@
 							<v-text-field label="Correo Electrónico" v-model="email" :rules="emailRules" required></v-text-field>
 						</v-flex>
 						<v-flex xs12 sm10 md10>
-							<v-text-field :type="'password'" v-model="password" :rules="passwordRules" label="Contraseña" required></v-text-field>
+							<v-text-field :type="show ? 'text' : 'password'" v-model="password" :append-icon="show ? 'visibility_off' : 'visibility'" :rules="passwordRules" label="Contraseña" @click:append="show = !show" required ></v-text-field>
 						</v-flex>
 						<v-flex xs12 sm10 md10>
 							<v-text-field label="Entidad" v-model="entity" :rules="usuarioRules" required></v-text-field>
@@ -40,6 +40,7 @@ export default {
     return {
       email: '',
       password: '',
+      show: false,
       location: '',
       entity: '',
       usuarioRules: [v => !!v || 'Usuario requerido'],
@@ -60,7 +61,8 @@ export default {
       EventBus.$emit('loading', true)
       db.collection('users').where('email', '==', this.$store.state.app.application.user.email).get().then(doc => {
         if (doc.docs[0]) {
-          alert('La cuenta de correo electrónico ya se encuentra asociada a Carina.')
+          EventBus.$emit('loading', false)
+          EventBus.$emit('errorMessage', { text: 'La cuenta de correo electrónico ya se encuentra asociada a Carina.', title: 'Error de registro', boolean: true })
         } else {
           db.collection('users').add(this.$store.state.app.application.user).then(docRef => {
             try {
@@ -73,9 +75,9 @@ export default {
               this.$router.push('/')
             }
           })
-          .catch(error => alert('Error al registrar el usuario: ', error))
+          .catch(error => EventBus.$emit('errorMessage', { text: `Error al registrar el usuario: ${error}`, title: 'Error de registro', boolean: true }))
         }
-      }).catch(error => alert('Error al verificar el usuario: ', error))
+      }).catch(error => EventBus.$emit('errorMessage', { text: `Error al verificar el usuario: ${error}`, title: 'Error de registro', boolean: true }))
     }
   },
   computed: {

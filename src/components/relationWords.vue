@@ -86,7 +86,7 @@ export default {
     word: '',
     category: '',
     category2: '',
-    url: 'http://localhost:3000'
+    url: 'https://carinag-225014.appspot.com'
   }),
   methods: {
     showChild (index) {
@@ -137,7 +137,7 @@ export default {
     },
     commonElements () {
       let array = []
-      // console.log(this.$store.state.app.relaciones[this.child].temasDeInteres[this.category].palabrasRelevantes)
+      console.log(this.$store.state.app.relaciones[this.child].temasDeInteres[this.category].palabrasRelevantes)
       this.$store.state.app.contexto.palabrasCandidatas.map(word => {
         let index = this.$store.state.app.relaciones[this.child].temasDeInteres[this.category].palabrasRelevantes.indexOf(word)
         if (index !== -1) {

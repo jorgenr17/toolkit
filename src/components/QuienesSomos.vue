@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-  
+
     <div
       id="e3"
       style="max-width: 600px; margin: auto;"
@@ -43,7 +43,7 @@
           </v-layout>
         </v-container>
       </v-card>
-    </div>    
+    </div>
   </v-container>
 </template>
 
@@ -59,8 +59,6 @@ export default {
 }
 </script>
 
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .centrado {
   text-align: center;

@@ -41,6 +41,7 @@ const config = {
   projectId: 'toolkit-1556a',
   storageBucket: 'toolkit-1556a.appspot.com',
   messagingSenderId: '146062994371'
+  //
   // apiKey: 'AIzaSyD2WPImzRuy22qzdfDgxrbEIhY-VaOUsA4',
   // authDomain: 'toolkit-ia.firebaseapp.com',
   // databaseURL: 'https://toolkit-ia.firebaseio.com',

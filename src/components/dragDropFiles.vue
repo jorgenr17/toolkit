@@ -38,8 +38,31 @@ export default {
       if (extension !== 'csv') {
         alert('Por favor ingrese un archivo valido (".csv").')
       } else {
-        console.log('loadCsv', extension, file)
+        let reader = new FileReader()
+        reader.readAsText(file)
+        reader.onload = this.loadHandler
       }
+    },
+    loadHandler (event) {
+      let file2 = event.target.result
+      let array = []
+      let allTextLines = file2.split(/\r\n|\n/);
+      let lines = {};
+      let obj = {}
+      let titles = allTextLines[0].split(';');
+      for (let i=1; i<allTextLines.length; i++) {
+        let data = allTextLines[i].split(';');
+        for (let j=0; j<titles.length; j++) {
+          if (data[j] != '' && data[j] != undefined) {
+            obj[titles[j]] = data[j]
+          }
+        }
+        if (Object.keys(obj).length !== 0) {
+          array.push(obj)
+          obj = {}
+        }
+      }
+      console.log(array)
     }
   }
 }
@@ -57,13 +80,11 @@ export default {
   border: 3px dashed #fff;
   font-size: 20px;
   position: relative;
-
 	&.dragging {
     background: #fff;
     color: #2196F3;
     border: 3px dashed #2196F3;
 	}
-
   i {
     font-size: 85px;
   }

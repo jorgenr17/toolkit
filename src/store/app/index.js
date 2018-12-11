@@ -172,7 +172,12 @@ const mutations = {
     state.relaciones[obj.child].temasDeInteres.push({ temaDeInteres: obj.word, palabrasRelevantes: [] })
   },
   asignWord: (state, obj) => {
-    state.relaciones[obj.child].temasDeInteres[obj.category].palabrasRelevantes.push(obj.word)
+    let index = state.relaciones[obj.child].temasDeInteres[obj.category].palabrasRelevantes.indexOf(obj.word)
+    if (index === -1) {
+      state.relaciones[obj.child].temasDeInteres[obj.category].palabrasRelevantes.push(obj.word)
+    } else {
+      state.relaciones[obj.child].temasDeInteres[obj.category].palabrasRelevantes.splice(index, 1)
+    }
   },
   mode: (state, mode) => {
     state.application.mode = mode
@@ -221,12 +226,12 @@ const actions = {
         context.dispatch('procesingCognitiveModel', link)
       }
     })
-    .catch(error => console.error('Error al registrar el cognitiveModel: ', error))
+    .catch(error => EventBus.$emit('errorMessage', { text: `Error al registrar el Modelo cognitivo: ${error}`, title: 'Error de registro deL Modelo', boolean: true }))
   },
   procesingCognitiveModel (context, link) {
     let data = {context: context.state.contexto, csv: context.state.application.csv}
     axios.defaults.headers.common['Authorization'] = context.state.application.user.carinaToken
-    axios.post(`${link}/c/postCognitiveModel`, data).then(response => console.log(response.data)).catch(err => console.error(err))
+    axios.post(`${link}/c/postCognitiveModel`, data).then(response => console.log(response.data)).catch(err => EventBus.$emit('errorMessage', { text: `Error al comunicarse con el servidor: ${err}`, title: 'Error de servidor', boolean: true }))
     EventBus.$emit('loading', false)
     context.state.application.createModel = false
     router.push('/UsingIA/palabraClave')
@@ -236,6 +241,7 @@ const actions = {
   },
   updatingCognitiveModel (context) {
     db.collection('cognitiveModels').doc(context.state.application.currentCognitiveModel).update(context.state.contexto).then(updt => EventBus.$emit('loading', false))
+    router.push('/UsingIA/palabraClave')
   },
   relationedWords (context, link) {
     console.log(context.state.relaciones)

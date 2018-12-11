@@ -47,7 +47,7 @@ export default {
       enlace,
       titulo,
       socket: null,
-      url: 'http://localhost:3000'
+      url: 'https://carinag-225014.appspot.com'
     }
   },
   methods: {
@@ -82,8 +82,6 @@ export default {
 }
 </script>
 
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .centrado {
   text-align: center;

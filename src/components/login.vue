@@ -38,7 +38,7 @@ export default {
       show: false,
       email: '',
       password: '',
-      url: 'http://localhost:3000',
+      url: 'https://carinag-225014.appspot.com',
       passwordRules: [v => !!v || 'Contraseña requerida'],
       emailRules: [
         v => !!v || 'Se requiere una cuenta de correo electrónico.',
@@ -64,12 +64,10 @@ export default {
             this.$router.push('/')
           }
         } else {
-          let confirmar = confirm('Usuario o contraseña invalido.')
-          if (confirmar) {
-            EventBus.$emit('loading', false)
-          }
+          EventBus.$emit('loading', false)
+          EventBus.$emit('errorMessage', { text: 'Usuario o contraseña invalido.', title: 'Error de Usuario', boolean: true })
         }
-      }).catch(error => alert('Error al verificar el usuario:', error))
+      }).catch(error => EventBus.$emit('errorMessage', { text: `Error al intentar verificar el usuario: ${error}`, title: 'Error en la base de datos', boolean: true }))
     }
   },
   computed: {

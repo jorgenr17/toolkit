@@ -46,7 +46,7 @@ export default {
   data: () => ({
     palabraClave: '',
     loading: false,
-    url: 'http://localhost:3000',
+    url: 'https://carinag-225014.appspot.com',
     text: 'Ejemplo: Rubro / Palabras agregadas: ',
     perH: false
   }),
