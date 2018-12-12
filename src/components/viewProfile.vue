@@ -29,7 +29,7 @@
 								<v-subheader>{{cm.name}}</v-subheader>
 							</v-flex>
 							<v-flex xs5 sm5 md5 align-self-center>
-								<v-btn small outline color="info">cargar</v-btn>
+								<v-btn small outline color="info" @click="loadCognitiveModel(cm.id)">cargar</v-btn>
 								<!-- <v-btn small outline color="error" @click="deleteCM()">eliminar</v-btn> -->
 							</v-flex>
 						</v-layout>
@@ -42,12 +42,20 @@
 
 <script>
 import banner from '@/assets/bannerRegistro.png'
+import EventBus from '@/components/EventBus'
 
 export default {
   name: 'viewProfile',
   data: () => ({
     banner
-  })
+  }),
+  methods: {
+    loadCognitiveModel (id) {
+      EventBus.$emit('loading', true)
+      this.$store.dispatch('app/loadCognitiveModel', id)
+    }
+  },
+  components: { EventBus }
 }
 </script>
 

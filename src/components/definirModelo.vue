@@ -17,10 +17,10 @@
           <!-- nombre del modelo -->
           <v-card-text>
             <v-text-field label="Dale un nombre a tu Modelo" hint="Ejemplo: Modelo de peticiones acerca de rubros presupuestales"
-            v-model="$store.state.app.contexto.nombre" placeholder color="accent"
+            v-model="$store.state.app.model.contexto.nombre" placeholder color="accent"
             :rules="[v => !!v || 'Campo requerido']"></v-text-field>
             <!-- descripción -->
-            <v-textarea rows="2" label="Cuéntanos para que sirve tu Modelo" v-model="$store.state.app.contexto.descripcion"
+            <v-textarea rows="2" label="Cuéntanos para que sirve tu Modelo" v-model="$store.state.app.model.contexto.descripcion"
             hint="Ejemplo: Mi modelo permite obtener respuestas acerca de rubros presupuestales,procesos de rubros, adición
             presupuestal, etc." color="accent"></v-textarea>
             <!-- palabras clave -->
@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     enableSaveModel () {
-      if (this.$store.state.app.contexto.nombre !== '' && this.$store.state.app.contexto.palabrasClave.length !== 0) {
+      if (this.$store.state.app.model.contexto.nombre !== '' && this.$store.state.app.model.contexto.palabrasClave.length !== 0) {
         return false
       } else {
         return true
@@ -75,7 +75,7 @@ export default {
     },
     addedWords () {
       let words = ''
-      this.$store.state.app.contexto.palabrasClave.forEach(word => {
+      this.$store.state.app.model.contexto.palabrasClave.forEach(word => {
         words += `${word}, `
       })
       return this.text + words.slice(0, -2)

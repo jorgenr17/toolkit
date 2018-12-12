@@ -61,18 +61,18 @@ export default {
       })
       this.socket.on('returnDataWithKeyWords', (data) => {
         console.log(data)
-        this.$store.commit('app/response', data)
+        this.$store.commit('app/returnDataWithKeyWords', data)
         EventBus.$emit('loading', false)
       })
       this.socket.on('relationedWords', (data) => {
-        console.log(data)
+        console.log(`respuesta: ${data}`)
         // this.$store.commit('app/response', data)
         EventBus.$emit('loading', false)
       })
     },
     getToken () {
-      if (this.$store.state.app.application.authenticated !== true) {
-        axios.post(`${this.url}/user/auth`, {idUsuario: this.$store.state.app.application.user.carinaToken, idSocket: this.$store.state.app.application.sokedId}).then(response => {
+      if (this.$store.state.app.application.authenticated === false && this.$store.state.app.application.user.email !== '') {
+        axios.post(`${this.url}/user/auth`, {idUsuario: this.$store.state.app.application.user.email, idSocket: this.$store.state.app.application.sokedId}).then(response => {
           console.log(response.data)
         }).catch(err => console.log(err))
       }

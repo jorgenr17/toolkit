@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-xl>
     <v-layout row wrap align-center>
-      <v-navigation-drawer absolute overflow temporary :mini-variant.sync="mini" v-model="drawer" hide-overlay stateless dark>
+      <v-navigation-drawer absolute overflow temporary :mini-variant.sync="mini" v-model="drawer" hide-overlay stateless style="background-color: black">
         <v-toolbar flat class="transparent">
           <v-list class="pa-0">
             <v-list-tile avatar>

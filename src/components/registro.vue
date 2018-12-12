@@ -74,8 +74,7 @@ export default {
               EventBus.$emit('loading', false)
               this.$router.push('/')
             }
-          })
-          .catch(error => EventBus.$emit('errorMessage', { text: `Error al registrar el usuario: ${error}`, title: 'Error de registro', boolean: true }))
+          }).catch(error => EventBus.$emit('errorMessage', { text: `Error al registrar el usuario: ${error}`, title: 'Error de registro', boolean: true }))
         }
       }).catch(error => EventBus.$emit('errorMessage', { text: `Error al verificar el usuario: ${error}`, title: 'Error de registro', boolean: true }))
     }

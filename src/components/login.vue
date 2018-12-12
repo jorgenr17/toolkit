@@ -51,8 +51,8 @@ export default {
       this.$refs.form.reset()
     },
     login () {
-      this.$store.commit('app/loginData', { email: this.email, password: this.password })
       EventBus.$emit('loading', true)
+      this.$store.commit('app/loginData', { email: this.email, password: this.password })
       db.collection('users').where('email', '==', this.email).where('password', '==', this.password).get().then((doc) => {
         if (doc.docs[0]) {
           let user = doc.docs[0]
