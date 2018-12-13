@@ -1,26 +1,13 @@
 <template>
-	<v-footer height="auto">
+	<v-footer height="auto" color="black">
     <v-card class="flex" flat tile>
-			<v-card-actions class="black darken-3 justify-center">
-					<router-link to="/quienesSomos"><a class="white--text">Quienes Somos?</a></router-link>
-					<v-spacer></v-spacer>
-					<router-link to="/quienesSomos"><a class="white--text">Contáctenos</a></router-link>
-					<v-spacer></v-spacer>
-					<router-link to="/quienesSomos"><a class="white--text">Términos y Condiciones</a></router-link>
-				<v-spacer></v-spacer>
-        &copy;2018 — <strong>CI&CC</strong>
-      </v-card-actions>
-      <v-card-title class="black py-2">
+			<v-layout class="black darken-3" justify-center row wrap >
+				<v-btn color="white" flat round>Quienes Somos?</v-btn>
+				<v-btn color="white" flat round>Contáctenos</v-btn>
+				<v-btn color="white" flat round>Términos y Condiciones</v-btn>
+			</v-layout>
+      <v-card-title class="black">
 				<v-img max-width max-height contain :src="logoCompleto"></v-img>
-				<!-- <v-img max-width max-height contain aspect-ratio="2" :src="logoPNUD"></v-img> -->
-				<!-- <v-spacer></v-spacer>
-				<v-img max-width max-height contain aspect-ratio="2" :src="logoGobierno"></v-img>
-				<v-spacer></v-spacer>
-				<v-spacer></v-spacer>
-				<v-spacer></v-spacer>
-				<v-spacer></v-spacer>
-				<v-img max-width max-height contain aspect-ratio="2" :src="logoCentroInnovacion"></v-img> -->
-				<!-- <img max-height max-width aspect-ratio="2" src="../assets/centroInnovacion.png" width="130px" height="35px"> -->
       </v-card-title>
     </v-card>
   </v-footer>

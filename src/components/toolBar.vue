@@ -2,7 +2,7 @@
 	<div>
 		<v-navigation-drawer :right="right" absolute overflow temporary v-model="drawer" class='mt-5' style='top: 16px;'>
 			<v-list>
-				<v-list-tile v-for="item in this.$store.state.app.application.toolBarItems" :key="item.title" :to="item.link">
+				<v-list-tile v-for="item in this.$store.state.app.application.toolBarItems" :key="item.title" :to="item.link" v-if="$store.state.app.application.authenticated === true && item.title === 'Perfil' || item.title !== 'Perfil' && $store.state.app.application.authenticated !== true">
 					<v-list-tile-action>
 						<v-icon color="black">{{ item.icon }}</v-icon>
 					</v-list-tile-action>

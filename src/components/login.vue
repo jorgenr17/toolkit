@@ -2,6 +2,7 @@
 	<div>
 		<toolbar/>
 		<v-container grid-list-md text-xs-center>
+			<!-- <errorMessage v-if="errorMessage" :message="message"/> -->
 			<v-layout justify-center>
 				<v-flex xs12 sm6 md6>
 					<v-card-title class="gray">
@@ -32,12 +33,13 @@ import EventBus from '@/components/EventBus'
 
 export default {
   name: 'login',
-  mounted () {},
   data () {
     return {
       show: false,
       email: '',
       password: '',
+      errorMessage: false,
+      message: null,
       url: 'https://carinag-225014.appspot.com',
       passwordRules: [v => !!v || 'Contraseña requerida'],
       emailRules: [
