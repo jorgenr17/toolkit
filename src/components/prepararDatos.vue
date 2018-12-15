@@ -16,7 +16,7 @@
       <v-layout row wrap>
         <v-flex xs12 sm3 md3>
           <div class="text-xs-center pt-5">
-            <v-btn :loading="loading3" :disabled="loading3" color="accent" class="white--text" @click="$refs.loadCsv.click ()">Subir Archivo<v-icon right dark>cloud_upload</v-icon>
+            <v-btn :loading="loading3" :disabled="loading3" color="accent" class="white--text" @click="$refs.loadCsv.click ()">Subir formato<v-icon right dark>cloud_upload</v-icon>
             </v-btn>
             <input type="file" ref="loadCsv" accept=".csv" @change="loadCsv" style="display: none">
           </div>

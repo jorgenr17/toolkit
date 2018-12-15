@@ -9,7 +9,7 @@
 				<div class="elevation-7">
 					<v-alert v-model="alert" dismissible color="error">Aqui se encuentran las palabras que has decartado de la bolsa de palabras que carina te ha propuesto.</v-alert>
 				</div>
-				<v-card class="pa-3 elevation-7">
+				<v-card class="elevation-7" height="300px">
 					<v-card-text class="list">
 							<div v-for="(val, index) in this.$store.state.app.model.contexto.palabrasDescartadas" :key="index">
 								<v-chip @input="check(val, 'palabrasDescartadas', 'palabrasClave')" close color="primary" text-color="white">{{val}}</v-chip>
@@ -22,18 +22,18 @@
 				<div class="elevation-7">
 					<v-alert v-model="alert" dismissible color="error">Aqi estan las palabras que has considerado relevantes de la bolsa de palabras que carina te ha propuesto.</v-alert>
 				</div>
-				<v-card class="pa-3 elevation-7">
+				<v-card class="elevation-7" height="300px">
 					<v-card-text class="list">
 						<div v-for="(val, index) in this.$store.state.app.model.contexto.palabrasClave" :key="index">
 							<v-chip @input="check(val, 'palabrasClave', 'palabrasDescartadas')" close color="accent" text-color="white">{{val}}</v-chip>
 						</div>
 					</v-card-text>
+					<!-- <div class="pb-5"> -->
+						<v-btn small absolute dark fab right bottom color="info" @click="addWord = !addWord">
+							<v-icon>add</v-icon>
+						</v-btn>
+					<!-- </div> -->
 				</v-card>
-				<div class="pb-5">
-					<v-btn absolute dark fab right color="info" @click="addWord = !addWord">
-						<v-icon>add</v-icon>
-					</v-btn>
-				</div>
 			</v-flex>
 		</v-layout>
     <div class="text-xs-center">
@@ -71,6 +71,6 @@ export default {
 </script>
 
 <style lang="css">
-.list{height:300px; width:100%; list-style:none;}
+.list{max-height: 100%; min-height: 100%; width:100%; list-style:none;}
 .list{overflow:hidden; overflow-y:scroll;}
 </style>

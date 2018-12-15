@@ -1,6 +1,6 @@
 <template>
 <v-content>
-  <v-jumbotron height="82.8%" :src="fondo">
+  <v-jumbotron height="82%" :src="fondo">
     <toolbar/>
     <v-container grid-list-md text-xs-center>
       <v-layout row>

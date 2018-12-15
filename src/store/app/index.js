@@ -285,6 +285,9 @@ const mutations = {
     state.application.user.password = data.password
     state.application.user.entity = data.entity
     state.application.user.location = data.location
+  },
+  deleteCM: (state, index) => {
+    state.application.user.cms.splice(index, 1)
   }
 }
 
@@ -382,6 +385,25 @@ const actions = {
         console.log(CognitiveModel.id, CognitiveModel.data())
       }).catch(error => EventBus.$emit('errorMessage', { text: `Error al registrar el Modelo cognitivo: ${error}`, title: 'Error de registro deL Modelo', boolean: true }))
     }
+    EventBus.$emit('loading', false)
+  },
+  deleteCM (context, id) {
+    db.collection('cognitiveModels').doc(id).delete().then(() => {
+      console.log('Document successfully deleted!')
+      try {
+        let cm = context.state.application.user.cms.find(cm => cm.id === id)
+        let index = context.state.application.user.cms.indexOf(cm)
+        context.commit('deleteCM', index)
+      } catch (e) {
+        console.log(e)
+      }
+      EventBus.$emit('loading', false)
+    }).then(() => context.dispatch('updateUser')).catch((error) => {
+      console.error('Error removing document: ', error)
+    })
+  },
+  saveChanges (context) {
+    context.dispatch('updateUser')
     EventBus.$emit('loading', false)
   }
 }

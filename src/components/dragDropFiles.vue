@@ -2,7 +2,7 @@
   <div class="uploader" @dragenter="OnDragEnter" @dragleave="OnDragLeave" @dragover.prevent @drop="onDrop" :class="{dragging: isDragging }">
     <div>
       <v-icon color="white" size="60px">cloud_upload</v-icon>
-      <p>Arrastra tu archivo aquí</p>
+      <p>Arrastra tu formato aquí</p>
     </div>
   </div>
 </template>
