@@ -18,6 +18,8 @@
 						<v-btn :disabled="!valid" @click="login">Entrar</v-btn>
 						<v-btn @click="clear">Limpiar Datos</v-btn>
 					</v-form>
+					<googleButton/>
+					<br>
 					<br>
 					<span>No tienes una cuenta?, </span><router-link to="/registro">Registrate Ahora</router-link>
 				</v-flex>
@@ -30,6 +32,7 @@
 import toolbar from '@/components/toolBar'
 import {db} from '../main'
 import EventBus from '@/components/EventBus'
+import googleButton from '@/components/signInGoogle'
 
 export default {
   name: 'login',
@@ -81,7 +84,7 @@ export default {
       }
     }
   },
-  components: { toolbar, EventBus }
+  components: { toolbar, EventBus, googleButton }
 }
 </script>
 

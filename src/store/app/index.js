@@ -27,22 +27,23 @@ const state = {
       { icon: 'exit_to_app', title: 'Ingresar', link: '/login' },
       { icon: 'how_to_reg', title: 'Registro', link: '/registro' },
       { icon: 'account_circle', title: 'Perfil', link: '/profile' }
+      // { icon: 'close', title: 'Cerrar Sesión', link: '/' }
     ],
     usingCM: {
       response: null,
       steps: {
         C: {
           active: 'accent',
-          icon: 'data_usage',
+          icon: 'fa-file-text-o',
           data: [
             { icon: 'account_circle', text: 'Preparar Datos', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' },
-            { icon: 'account_circle', text: 'Definir Modelo', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/DefinirModelo' },
-            { icon: 'account_circle', text: 'Enviale tus datos a Carina', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/DefinirModelo' }
+            { icon: 'account_circle', text: 'Definir Modelo', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/DefinirModelo' },
+            { icon: 'account_circle', text: 'Enviale tus datos a Carina', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/DefinirModelo' }
           ]
         },
         E: {
           active: 'disable',
-          icon: 'swap_horizontal_circle',
+          icon: 'fa-cogs',
           data: [
             { icon: 'personal_video', text: 'Analizar Datos', active: 'disable', color: 'primary', shadow: '#CA0E69', to: '/UsingIA/PrepararDatos' },
             { icon: 'account_circle', text: 'Palabras Relevantes', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/palabraClave' },
@@ -51,16 +52,16 @@ const state = {
         },
         P: {
           active: 'disable',
-          icon: 'play_for_work',
+          icon: 'fa-spinner',
           data: [
             { icon: 'account_circle', text: 'Cargar Modelo', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' },
-            { icon: 'account_circle', text: 'Cargar Datos', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' },
-            { icon: 'account_circle', text: 'Iniciar Prueba', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' }
+            { icon: 'account_circle', text: 'Cargar Datos', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' },
+            { icon: 'account_circle', text: 'Iniciar Prueba', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' }
           ]
         }
       }
     },
-    mode: '',
+    mode: 'DEMO',
     modes: [
       { text: 'No tienes información y tienes poco tiempo?', textButton: 'DEMO', img: user },
       { text: 'Quieres volver a ingresar y seguir probando?', textButton: 'DIY', img: manager }
@@ -87,108 +88,7 @@ const state = {
       preguntas: [],
       verbosDelDominio: []
     },
-    registros: [
-      {
-        fecha: '10/02/2018',
-        hora: '10:30 am',
-        tipo: '',
-        solicitud: 'por favor me pueden informar cuando es la fecha de cierre convocatoria de los proyectos de investigación',
-        dependencia: 'Investigación',
-        respuesta: 'La fecha de cierre es el 5 de diciembre de 2018',
-        observaciones: '',
-        palabrasClave: [],
-        palabrasCandidatas: [],
-        palabrasRelevantes: [],
-        palabrsCompuestas: [],
-        palabrasDescartadas: [],
-        verbosSolcitudes: [],
-        categorias: [],
-        entidadesSolicitud: {
-          fechas: [],
-          lugares: [],
-          miscelaneas: []
-        },
-        entidadesRespuesta: {
-          fecha: [],
-          miscelaneas: []
-        }
-      },
-      {
-        fecha: '11/02/2018',
-        hora: '10:30 am',
-        tipo: '',
-        solicitud: 'Necesito saber que papeles debo de tener en cuenta para presentar un proyecto de investigación',
-        dependencia: 'Investigación, Extensión',
-        respuesta: 'Se deben presentar los siguientes formatos diligenciados: a. Formato de proyecto de investigació        extensión: F2080 y b. Formato F2081',
-        observaciones: '',
-        palabrasClave: [],
-        palabrasCandidatas: [],
-        palabrasRelevantes: [],
-        palabrsCompuestas: [],
-        palabrasDescartadas: [],
-        verbosSolcitudes: [],
-        categorias: [],
-        entidadesSolicitud: {
-          fechas: [],
-          lugares: [],
-          miscelaneas: []
-        },
-        entidadesRespuesta: {
-          fecha: [],
-          miscelaneas: []
-        }
-      },
-      {
-        fecha: '10/03/2018',
-        hora: '10:30 am',
-        tipo: '',
-        solicitud: 'Cuál es la fecha de inicio del proyecto FE-002',
-        dependencia: 'Investigación, Extención',
-        respuesta: 'La fecha de inicio del proyecto es 3 de junio de 20018',
-        observaciones: '',
-        palabrasClave: [],
-        palabrasCandidatas: [],
-        palabrasRelevantes: [],
-        palabrsCompuestas: [],
-        palabrasDescartadas: [],
-        verbosSolcitudes: [],
-        categorias: [],
-        entidadesSolicitud: {
-          fechas: [],
-          lugares: [],
-          miscelaneas: []
-        },
-        entidadesRespuesta: {
-          fecha: [],
-          miscelaneas: []
-        }
-      },
-      {
-        fecha: '10/03/2018',
-        hora: '10:30 am',
-        tipo: '',
-        solicitud: 'Quien es el encargado de recepcionar los proyectos de extensión',
-        dependencia: 'Extensión',
-        respuesta: 'Maria Perez es la persona encargada de recepcionar los proyectos de extensión',
-        observaciones: '',
-        palabrasClave: [],
-        palabrasCandidatas: [],
-        palabrasRelevantes: [],
-        palabrsCompuestas: [],
-        palabrasDescartadas: [],
-        verbosSolcitudes: [],
-        categorias: [],
-        entidadesSolicitud: {
-          fechas: [],
-          lugares: [],
-          miscelaneas: []
-        },
-        entidadesRespuesta: {
-          fecha: [],
-          miscelaneas: []
-        }
-      }
-    ],
+    registros: [],
     relaciones: []
   },
   registro: {
@@ -230,6 +130,16 @@ const mutations = {
       }
     }
   },
+  changeElements: (state, data) => {
+    let index = state.application.usingCM.steps[data.i].data.indexOf(data.el)
+    state.application.usingCM.steps[data.i].data[index].active = 'accent'
+    state.application.usingCM.steps[data.i].data.map(e => {
+      if (e.text !== data.el.text) {
+        e.active = 'disable'
+      }
+    })
+    router.push(data.to)
+  },
   addPalabraClave: (state, word) => {
     state.model.contexto.palabrasClave.push(word)
   },
@@ -240,7 +150,6 @@ const mutations = {
     state.application.socketId = socketId
   },
   carinaToken: (state, token) => {
-    console.log(token)
     state.application.user.carinaToken = token
   },
   returnDataWithKeyWords: (state, data) => {
@@ -288,6 +197,118 @@ const mutations = {
   },
   deleteCM: (state, index) => {
     state.application.user.cms.splice(index, 1)
+  },
+  loginGoogle: (state, data) => {
+    state.application.user = data
+  },
+  file: (state, mode) => {
+    if (mode === 'DEMO') {
+      let registros = [
+        {
+          fecha: '10/02/2018',
+          hora: '10:30 am',
+          tipo: '',
+          solicitud: 'por favor me pueden informar cuando es la fecha de cierre convocatoria de los proyectos de investigación',
+          dependencia: 'Investigación',
+          respuesta: 'La fecha de cierre es el 5 de diciembre de 2018',
+          observaciones: '',
+          palabrasClave: [],
+          palabrasCandidatas: [],
+          palabrasRelevantes: [],
+          palabrsCompuestas: [],
+          palabrasDescartadas: [],
+          verbosSolcitudes: [],
+          categorias: [],
+          entidadesSolicitud: {
+            fechas: [],
+            lugares: [],
+            miscelaneas: []
+          },
+          entidadesRespuesta: {
+            fecha: [],
+            miscelaneas: []
+          }
+        },
+        {
+          fecha: '11/02/2018',
+          hora: '10:30 am',
+          tipo: '',
+          solicitud: 'Necesito saber que papeles debo de tener en cuenta para presentar un proyecto de investigación',
+          dependencia: 'Investigación, Extensión',
+          respuesta: 'Se deben presentar los siguientes formatos diligenciados: a. Formato de proyecto de investigació        extensión: F2080 y b. Formato F2081',
+          observaciones: '',
+          palabrasClave: [],
+          palabrasCandidatas: [],
+          palabrasRelevantes: [],
+          palabrsCompuestas: [],
+          palabrasDescartadas: [],
+          verbosSolcitudes: [],
+          categorias: [],
+          entidadesSolicitud: {
+            fechas: [],
+            lugares: [],
+            miscelaneas: []
+          },
+          entidadesRespuesta: {
+            fecha: [],
+            miscelaneas: []
+          }
+        },
+        {
+          fecha: '10/03/2018',
+          hora: '10:30 am',
+          tipo: '',
+          solicitud: 'Cuál es la fecha de inicio del proyecto FE-002',
+          dependencia: 'Investigación, Extención',
+          respuesta: 'La fecha de inicio del proyecto es 3 de junio de 20018',
+          observaciones: '',
+          palabrasClave: [],
+          palabrasCandidatas: [],
+          palabrasRelevantes: [],
+          palabrsCompuestas: [],
+          palabrasDescartadas: [],
+          verbosSolcitudes: [],
+          categorias: [],
+          entidadesSolicitud: {
+            fechas: [],
+            lugares: [],
+            miscelaneas: []
+          },
+          entidadesRespuesta: {
+            fecha: [],
+            miscelaneas: []
+          }
+        },
+        {
+          fecha: '10/03/2018',
+          hora: '10:30 am',
+          tipo: '',
+          solicitud: 'Quien es el encargado de recepcionar los proyectos de extensión',
+          dependencia: 'Extensión',
+          respuesta: 'Maria Perez es la persona encargada de recepcionar los proyectos de extensión',
+          observaciones: '',
+          palabrasClave: [],
+          palabrasCandidatas: [],
+          palabrasRelevantes: [],
+          palabrsCompuestas: [],
+          palabrasDescartadas: [],
+          verbosSolcitudes: [],
+          categorias: [],
+          entidadesSolicitud: {
+            fechas: [],
+            lugares: [],
+            miscelaneas: []
+          },
+          entidadesRespuesta: {
+            fecha: [],
+            miscelaneas: []
+          }
+        }
+      ]
+      state.model.registros = registros
+    } else {
+      state.model.registros = []
+    }
   }
 }
 
@@ -345,7 +366,7 @@ const actions = {
   },
   createRelations (context) {
     try {
-      context.state.model.contexto.palabrasCandidatas.map(word => {
+      context.state.model.contexto.palabrasClave.map(word => {
         let a = {
           palabraClave: word,
           temasDeInteres: []
@@ -373,9 +394,11 @@ const actions = {
       } catch (error) {
         console.error(error)
       } finally {
+        context.commit('file', mode)
         context.commit('mode', mode)
       }
     } else {
+      context.commit('file', mode)
       context.commit('mode', mode)
     }
   },

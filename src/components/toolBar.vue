@@ -12,13 +12,15 @@
 		</v-navigation-drawer>
 		<v-toolbar dark color="black">
 			<v-toolbar-title>
+				<!-- http://www.toolkitlab.co/ -->
+				<!-- <a href="http://www.toolkitlab.co/"><img src="../assets/logoToolkitCompleto.png" width="150px" height="45px"></a> -->
 				<router-link to="/" tag="span" style="cursor: pointer">
 					<img src="../assets/logoToolkitCompleto.png" width="150px" height="45px">
 				</router-link>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-toolbar-items class="hidden-xs-only">
-				<v-btn flat v-for="item in this.$store.state.app.application.toolBarItems" v-if="$store.state.app.application.authenticated === true && item.title === 'Perfil' || item.title !== 'Perfil' && $store.state.app.application.authenticated !== true" :key="item.title" :to="item.link">
+				<v-btn flat v-for="item in this.$store.state.app.application.toolBarItems" v-if="$store.state.app.application.authenticated === true && item.title === 'Perfil' || item.title === 'Cerrar Sesión' || item.title !== 'Perfil' && $store.state.app.application.authenticated !== true" :key="item.title" :to="item.link">
 					<v-icon left>{{ item.icon }}</v-icon>
 					<span>{{ item.title }}</span>
 				</v-btn>

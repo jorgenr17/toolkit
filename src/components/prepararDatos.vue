@@ -1,11 +1,20 @@
 <template>
   <v-container>
     <h1 class="pb-2" style="font-size: 35px">Prepara tus datos de la siguiente manera</h1>
-    <v-divider></v-divider>
+    <v-divider class="pb-3"></v-divider>
+    <!-- <div>
+      <v-alert v-model="alert" color="black" class="secondary--text" dismissible><strong>Recuerda...</strong><br>Tus datos deben estar organizados de la siguiente forma</v-alert>
+    </div> -->
     <div>
-      <v-alert v-model="alert" dismissible><strong>Recuerda...</strong><br>Tus datos deben estar organizados de la siguiente forma</v-alert>
+      <v-alert :value="true" color="primary" icon="info" outline dismissible class="mt-5">
+        Recuerda...</strong><br>Tus datos deben estar organizados de la siguiente forma.
+      </v-alert>
     </div>
-    <v-img :src="previewData" contain aspect-ratio="3"></v-img>
+    <!-- <v-img :src="previewData" contain aspect-ratio="3"></v-img> -->
+    <table class="text-xs-center" v-if="this.$store.state.app.model.registros.length !== 0">
+      <tr><td class="title pa-2">Fecha</td><td class="title pa-2">Hora</td><td class="title pa-2">Solicitud</td><td class="title pa-2">Dependencia</td><td class="title pa-2">Respuesta</td><td class="title pa-2">Observaciones</td></tr>
+      <tr v-for="(value, index) in table" :key="index"><td class="corpus pa-2" v-for="(val, i, k) in value" :key="k">{{val}}</td></tr>
+    </table>
     <div v-if="this.$store.state.app.application.mode === 'DEMO'">
       <v-alert :value="true" color="primary" icon="info" outline>
         Los datos que corresponden a la imagen ya se encuentran cargados en la versión <strong>DEMO</strong>.
@@ -71,6 +80,14 @@ export default {
   computed: {
     csv () {
       return JSON.stringify(this.$store.state.app.application.csv, null, 2)
+    },
+    table () {
+      var array = []
+      this.$store.state.app.model.registros.map(el => {
+        let {fecha, hora, solicitud, dependencia, respuesta, observaciones} = el
+        array.push({fecha, hora, solicitud, dependencia, respuesta, observaciones})
+      })
+      return array
     }
   },
   components: { dragDropFiles }
@@ -78,6 +95,8 @@ export default {
 </script>
 
 <style lang="css">
+.title {border: 2px solid grey; font-size: 18px; font-weight: bold; background-color: grey  }
+.corpus {border: 2px solid grey;}
 .custom-loader {
     animation: loader 1s infinite;
     display: flex;

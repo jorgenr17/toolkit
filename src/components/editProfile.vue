@@ -108,7 +108,6 @@ export default {
       this.$store.dispatch('app/saveChanges')
     },
     deleteCM () {
-      console.log(this.model.id)
       EventBus.$emit('loading', true)
       this.$store.dispatch('app/deleteCM', this.model.id)
       this.model = null

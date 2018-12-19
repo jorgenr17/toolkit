@@ -2,10 +2,10 @@
   <div>
     <toolbar/>
     <v-container grid-list-md fill-height>
-      <v-layout row align-center>
+      <v-layout row align-center class="mt-5">
         <v-flex xs6 md6 v-for="(mode, index) in this.$store.state.app.application.modes" :key="index" offset-md0>
           <v-flex row class="text-xs-center">
-            <v-avatar slot="activator" size="200px">
+            <v-avatar slot="activator" size="180px">
               <img :src="mode.img">
             </v-avatar>
           </v-flex>
@@ -13,10 +13,12 @@
             <span style="font-size: 24px">{{mode.text}}</span>
           </v-flex>
           <v-flex row>
-            <router-link to=""><a class="error--text" style="font-style: italic; font-size: 24px">Haz click aqui</a></router-link to="">
+            <a @click="activeMode(mode.textButton)" class="primary--text" style="font-style: italic; font-size: 20px; text-decoration: underline;">Haz click aqui</a>
           </v-flex>
           <v-flex row>
-            <v-btn block @click="activeMode(mode.textButton)" large outline color="black" style="font-size: 28px">{{mode.textButton}}</v-btn>
+            <div class="text-xs-center">
+              <v-btn @click="activeMode(mode.textButton)" large color="black" class="white--text" style="font-size: 28px">{{mode.textButton}}</v-btn>
+            </div>
           </v-flex>
         </v-flex>
       </v-layout>

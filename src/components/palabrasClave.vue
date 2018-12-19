@@ -3,11 +3,11 @@
 		<dialogo :addWord="addWord"/>
     <h1 class="pb-2" style="font-size: 35px">Cuales son tus palabras de Interés?</h1>
 		<v-divider></v-divider>
-		<v-layout row wrap>
+		<v-layout row wrap class="mt-5">
       <v-flex column xs12 sm6 md6>
 				<div class="headline pa-2">Palabras Descartadas</div>
 				<div class="elevation-7">
-					<v-alert v-model="alert" dismissible color="error">Aqui se encuentran las palabras que has decartado de la bolsa de palabras que carina te ha propuesto.</v-alert>
+					<v-alert v-model="alert" color="black"><v-icon color="white">error_outline</v-icon> Aquí se encuentran las palabras que has decartado de la bolsa de palabras que CARINA te ha propuesto.</v-alert>
 				</div>
 				<v-card class="elevation-7" height="300px">
 					<v-card-text class="list">
@@ -18,9 +18,9 @@
 				</v-card>
 			</v-flex>
 			<v-flex column xs12 sm6 md6>
-				<div class="headline pa-2">Palabras Clave</div>
+				<div class="headline pa-2">Palabras Relevantes</div>
 				<div class="elevation-7">
-					<v-alert v-model="alert" dismissible color="error">Aqi estan las palabras que has considerado relevantes de la bolsa de palabras que carina te ha propuesto.</v-alert>
+					<v-alert v-model="alert" color="black"><v-icon color="white">error_outline</v-icon> Aquí estan las palabras que has considerado relevantes de la bolsa de palabras que CARINA te ha propuesto.</v-alert>
 				</div>
 				<v-card class="elevation-7" height="300px">
 					<v-card-text class="list">

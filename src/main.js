@@ -13,6 +13,7 @@ import firebase from 'firebase/app'
 import 'firebase/storage'
 import 'firebase/auth'
 import 'firebase/firestore'
+import GSignInButton from 'vue-google-signin-button'
 
 const tema = {
   icon: {
@@ -34,6 +35,7 @@ const tema = {
 
 Vue.use(Vuetify, tema)
 Vue.use(VueFire)
+Vue.use(GSignInButton)
 
 const config = {
   apiKey: 'AIzaSyALVtR9gL-zpCvxC-aowWFWcDqW71eHsEw',

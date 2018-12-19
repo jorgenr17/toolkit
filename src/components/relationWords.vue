@@ -16,9 +16,9 @@
 		<v-layout row wrap>
 			<v-flex d-flex xs12 sm12 md4 class="pa-1">
 				<v-card height="300px" class="elevation-7">
-					<v-toolbar card color="grey lighten-3">
+					<v-toolbar card color="black" class="white--text">
 						<v-flex class="text-xs-center">
-							<v-toolbar-title>Temas</v-toolbar-title>
+							<v-toolbar-title style="font-size: 35px">Temas</v-toolbar-title>
 						</v-flex>
 					</v-toolbar>
 					<v-card-text class="list">
@@ -35,9 +35,9 @@
 
 			<v-flex d-flex xs12 sm12 md4 class="pa-1">
 				<v-card height="300px" class="elevation-7">
-					<v-toolbar card color="grey lighten-3">
+					<v-toolbar card color="black" class="white--text">
 						<v-flex class="text-xs-center">
-							<v-toolbar-title>Categorias</v-toolbar-title>
+							<v-toolbar-title style="font-size: 35px">Categorias</v-toolbar-title>
 						</v-flex>
 					</v-toolbar>
 					<!-- <div class="pr-1"> -->
@@ -56,9 +56,9 @@
 
 			<v-flex d-flex xs12 sm12 md4 class="pa-1">
 				<v-card height="300px" class="elevation-7">
-					<v-toolbar card color="grey lighten-3">
+					<v-toolbar card color="black" class="white--text">
 						<v-flex class="text-xs-center">
-							<v-toolbar-title>Palabras</v-toolbar-title>
+							<v-toolbar-title style="font-size: 35px">Palabras</v-toolbar-title>
 						</v-flex>
 					</v-toolbar>
 					<v-card-text class="list">

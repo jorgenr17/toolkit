@@ -21,8 +21,8 @@
         <div class="py-5">
           <v-list-tile class="py-5">
             <v-timeline dark dense>
-              <v-timeline-item class="neon" v-for="(el, i) in steps" :color="el.color" :icon="el.icon" :key="i">
-                <v-list-tile @click="routeTo(el.to)" :class="`${el.color}--text`" :style="`text-shadow: ${el.shadow};`" >{{el.text}}</v-list-tile>
+              <v-timeline-item class="neon" v-for="(el, i) in steps" :color="el.active" :icon="el.icon" :key="i">
+                <v-list-tile @click="routeTo(el.to, el)" :class="`${el.active}--text`" :style="`text-shadow: ${el.shadow};`" >{{el.text}}</v-list-tile>
               </v-timeline-item>
             </v-timeline>
           </v-list-tile>
@@ -55,8 +55,11 @@ export default {
       this.$store.commit('app/changeStep', key)
       this.init = key
     },
-    routeTo (to) {
-      this.$router.push(to)
+    routeTo (to, el) {
+      this.$store.commit('app/changeElements', {to: to, el: el, i: this.init})
+      // let index = this.steps.indexOf(el)
+      // this.steps[index].active = 'disabe'
+      // this.$router.push(to)
     }
   },
   components: { toolbar }

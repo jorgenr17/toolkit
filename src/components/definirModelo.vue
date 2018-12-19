@@ -6,7 +6,7 @@
         <v-divider></v-divider>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+    <v-layout row wrap class="pt-5">
       <v-flex column xs12 sm12 md12 class="py-3">
         <v-card light hover style="border-color: black">
           <v-card-title primary-title>
