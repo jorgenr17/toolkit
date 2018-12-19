@@ -9,6 +9,7 @@
 
 <script>
 /* eslint-disable */
+import EventBus from '@/components/EventBus'
 
 export default {
   data: () => ({
@@ -36,7 +37,7 @@ export default {
 			let file = e.dataTransfer.files[0]
       let extension = file.name.split('.')[1]
       if (extension !== 'csv') {
-        alert('Por favor ingrese un archivo valido (".csv").')
+        EventBus.$emit('errorMessage', {title: 'Formato Inválido', text: 'Por favor ingrese un archivo válido (".csv").', boolean: true})
       } else {
         let reader = new FileReader()
         reader.readAsText(file)
@@ -62,9 +63,26 @@ export default {
           obj = {}
         }
       }
-      console.log(array)
+      // console.log(array)
+      let keysObj = ['fecha', 'hora', 'solicitud', 'dependencia', 'respuesta', 'observaciones']
+      let keys = Object.keys(array[0])
+      let count = 0
+      keysObj.map(a => {
+        keys.map(b => {
+          if (a == b) {
+            count ++
+          }
+        })
+      })
+      // console.log(count)
+      if (count === 6) {
+        this.$store.commit('app/csv', array)
+      } else {
+        EventBus.$emit('errorMessage', {title: 'Formato Inválido', text: 'Por favor verifique que el formato contenga todos los campos.', boolean: true})
+      }
     }
-  }
+  },
+  components: { EventBus }
 }
 </script>
 

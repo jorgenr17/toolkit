@@ -309,6 +309,9 @@ const mutations = {
     } else {
       state.model.registros = []
     }
+  },
+  csv: (state, array) => {
+    state.model.registros = array
   }
 }
 

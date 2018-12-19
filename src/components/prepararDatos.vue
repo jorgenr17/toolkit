@@ -46,6 +46,7 @@
 <script>
 import previewData from '../assets/previewData.png'
 import dragDropFiles from '@/components/dragDropFiles'
+import EventBus from '@/components/EventBus'
 
 export default {
   name: 'PrepararDatos',
@@ -60,13 +61,52 @@ export default {
       let file = event.target.files[0]
       let extension = file.name.split('.')[1]
       if (extension !== 'csv') {
-        alert('Por favor ingrese un archivo valido (".csv").')
+        EventBus.$emit('errorMessage', {title: 'Formato Inválido', text: 'Por favor ingrese un archivo válido (".csv").', boolean: true})
       } else {
         this.loader = 'loading3'
-        console.log('loadCsv', extension, file)
+        let reader = new FileReader()
+        reader.readAsText(file)
+        reader.onload = this.loadHandler
       }
       this.$refs.loadCsv.type = 'text'
       this.$refs.loadCsv.type = 'file'
+    },
+    loadHandler (event) {
+      let file2 = event.target.result
+      let array = []
+      let allTextLines = file2.split(/\r\n|\n/)
+      // let lines = {}
+      let obj = {}
+      let titles = allTextLines[0].split(';')
+      for (let i = 1; i < allTextLines.length; i++) {
+        let data = allTextLines[i].split(';')
+        for (let j = 0; j < titles.length; j++) {
+          if (data[j] !== '' && data[j] !== undefined) {
+            obj[titles[j]] = data[j]
+          }
+        }
+        if (Object.keys(obj).length !== 0) {
+          array.push(obj)
+          obj = {}
+        }
+      }
+      // console.log(array)
+      let keysObj = ['fecha', 'hora', 'solicitud', 'dependencia', 'respuesta', 'observaciones']
+      let keys = Object.keys(array[0])
+      let count = 0
+      keysObj.map(a => {
+        keys.map(b => {
+          if (a === b) {
+            count++
+          }
+        })
+      })
+      // console.log(count)
+      if (count === 6) {
+        this.$store.commit('app/csv', array)
+      } else {
+        EventBus.$emit('errorMessage', {title: 'Formato Inválido', text: 'Por favor verifique que el formato contenga todos los campos.', boolean: true})
+      }
     }
   },
   watch: {
@@ -90,7 +130,7 @@ export default {
       return array
     }
   },
-  components: { dragDropFiles }
+  components: { dragDropFiles, EventBus }
 }
 </script>
 
