@@ -6,7 +6,7 @@
       <v-alert v-model="alert" color="black" class="secondary--text" dismissible><strong>Recuerda...</strong><br>Tus datos deben estar organizados de la siguiente forma</v-alert>
     </div> -->
     <div>
-      <v-alert :value="true" color="primary" icon="info" outline dismissible class="mt-5">
+      <v-alert :value="true" icon="info" color="primary" outline dismissible class="mt-5">
         Recuerda...</strong><br>Tus datos deben estar organizados de la siguiente forma.
       </v-alert>
     </div>
@@ -38,7 +38,7 @@
       </v-layout>
     </div>
     <div class="text-xs-right pt-5">
-      <v-btn color="black" outline to="/UsingIA/DefinirModelo">Siguiente</v-btn>
+      <v-btn color="black" outline @click="next('/UsingIA/DefinirModelo')">Siguiente</v-btn>
     </div>
   </v-container>
 </template>
@@ -57,6 +57,10 @@ export default {
     loader: null
   }),
   methods: {
+    next (to) {
+      let el = this.$store.state.app.application.usingCM.steps['C'].data.find(el => el.to === to)
+      this.$store.commit('app/changeElements', {to: to, el: el, i: 'C'})
+    },
     loadCsv (event) {
       let file = event.target.files[0]
       let extension = file.name.split('.')[1]

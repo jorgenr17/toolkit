@@ -11,6 +11,8 @@ import PrepararDatos from '@/components/PrepararDatos'
 import DefinirModelo from '@/components/definirModelo'
 import PalabrasClave from '@/components/palabrasClave'
 import TemasDeInteres from '@/components/temasDeInteres'
+import Questions from '@/components/questions'
+import QuestionsList from '@/components/questionsList'
 import steps from '@/components/steps'
 
 Vue.use(Router)
@@ -67,6 +69,12 @@ const routes = {
       }, {
         path: 'temasDeInteres',
         component: TemasDeInteres
+      }, {
+        path: 'questions',
+        component: Questions
+      }, {
+        path: 'questionsList',
+        component: QuestionsList
       }]
     }
   ]

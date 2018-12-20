@@ -38,7 +38,12 @@
 
 <script>
 import toolbar from '@/components/toolBar'
+import EventBus from '@/components/EventBus'
 export default {
+  name: 'timeline',
+  mounted () {
+    EventBus.$on('init', val => { this.init = val })
+  },
   data: () => ({
     init: 'C',
     drawer: true,
@@ -62,7 +67,7 @@ export default {
       // this.$router.push(to)
     }
   },
-  components: { toolbar }
+  components: { toolbar, EventBus }
 }
 </script>
 <style>

@@ -7,7 +7,16 @@
       <v-flex column xs12 sm6 md6>
 				<div class="headline pa-2">Palabras Descartadas</div>
 				<div class="elevation-7">
-					<v-alert v-model="alert" color="black"><v-icon color="white">error_outline</v-icon> Aquí se encuentran las palabras que has decartado de la bolsa de palabras que CARINA te ha propuesto.</v-alert>
+					<v-alert v-model="alert" color="black">
+						<v-layout>
+							<v-flex column>
+								<v-icon color="white">error_outline</v-icon>
+							</v-flex>
+							<v-flex column>
+								Aquí se encuentran las palabras que has decartado de la bolsa de palabras que CARINA te ha propuesto.
+							</v-flex>
+						</v-layout>
+					</v-alert>
 				</div>
 				<v-card class="elevation-7" height="300px">
 					<v-card-text class="list">
@@ -20,11 +29,19 @@
 			<v-flex column xs12 sm6 md6>
 				<div class="headline pa-2">Palabras Relevantes</div>
 				<div class="elevation-7">
-					<v-alert v-model="alert" color="black"><v-icon color="white">error_outline</v-icon> Aquí estan las palabras que has considerado relevantes de la bolsa de palabras que CARINA te ha propuesto.</v-alert>
+					<v-alert v-model="alert" color="black"><v-layout>
+						<v-flex column>
+							<v-icon color="white">error_outline</v-icon>
+						</v-flex>
+						<v-flex column>
+							Aquí estan las palabras que has considerado relevantes de la bolsa de palabras que CARINA te ha propuesto.
+						</v-flex>
+					</v-layout>
+				</v-alert>
 				</div>
 				<v-card class="elevation-7" height="300px">
 					<v-card-text class="list">
-						<div v-for="(val, index) in this.$store.state.app.model.contexto.palabrasClave" :key="index">
+						<div v-for="(val, index) in this.$store.state.app.model.contexto.palabrasCandidatas" :key="index">
 							<v-chip @input="check(val, 'palabrasClave', 'palabrasDescartadas')" close color="accent" text-color="white">{{val}}</v-chip>
 						</div>
 					</v-card-text>

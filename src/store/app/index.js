@@ -36,18 +36,18 @@ const state = {
           active: 'accent',
           icon: 'fa-file-text-o',
           data: [
-            { icon: 'account_circle', text: 'Preparar Datos', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' },
-            { icon: 'account_circle', text: 'Definir Modelo', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/DefinirModelo' },
-            { icon: 'account_circle', text: 'Enviale tus datos a Carina', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/DefinirModelo' }
+            { icon: 'table_chart', text: 'Preparar Datos', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' },
+            { icon: 'code', text: 'Definir Modelo', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/DefinirModelo' }
+            // { icon: 'account_circle', text: 'Enviale tus datos a Carina', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/DefinirModelo' }
           ]
         },
         E: {
           active: 'disable',
           icon: 'fa-cogs',
           data: [
-            { icon: 'personal_video', text: 'Analizar Datos', active: 'disable', color: 'primary', shadow: '#CA0E69', to: '/UsingIA/PrepararDatos' },
-            { icon: 'account_circle', text: 'Palabras Relevantes', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/palabraClave' },
-            { icon: 'personal_video', text: 'Preguntas', active: 'disable', color: 'primary', shadow: '#CA0E69', to: '/UsingIA/PrepararDatos' }
+            { icon: 'list_alt', text: 'Palabras Relevantes', active: 'disable', color: 'primary', shadow: '#CA0E69', to: '/UsingIA/palabraClave' },
+            { icon: 'timeline', text: 'Temas de Interés', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/temasDeInteres' },
+            { icon: 'fa-question-circle', text: 'Preguntas', active: 'disable', color: 'primary', shadow: '#CA0E69', to: '/UsingIA/questions' }
           ]
         },
         P: {
@@ -122,6 +122,7 @@ const getters = {}
 
 const mutations = {
   changeStep: (state, key) => {
+    // console.log(key)
     for (var k in state.application.usingCM.steps) {
       if (k === key) {
         state.application.usingCM.steps[k].active = 'accent'
@@ -205,6 +206,7 @@ const mutations = {
     if (mode === 'DEMO') {
       let registros = [
         {
+          check: false,
           fecha: '10/02/2018',
           hora: '10:30 am',
           tipo: '',
@@ -218,6 +220,7 @@ const mutations = {
           palabrsCompuestas: [],
           palabrasDescartadas: [],
           verbosSolcitudes: [],
+          pregunta: 'cuando es la fecha de cierre convocatoria de los proyectos de investigación?',
           categorias: [],
           entidadesSolicitud: {
             fechas: [],
@@ -225,11 +228,12 @@ const mutations = {
             miscelaneas: []
           },
           entidadesRespuesta: {
-            fecha: [],
+            fechas: [],
             miscelaneas: []
           }
         },
         {
+          check: false,
           fecha: '11/02/2018',
           hora: '10:30 am',
           tipo: '',
@@ -237,6 +241,7 @@ const mutations = {
           dependencia: 'Investigación, Extensión',
           respuesta: 'Se deben presentar los siguientes formatos diligenciados: a. Formato de proyecto de investigació        extensión: F2080 y b. Formato F2081',
           observaciones: '',
+          pregunta: 'que papeles debo de tener en cuenta para presentar un proyecto de investigación?',
           palabrasClave: [],
           palabrasCandidatas: [],
           palabrasRelevantes: [],
@@ -250,11 +255,12 @@ const mutations = {
             miscelaneas: []
           },
           entidadesRespuesta: {
-            fecha: [],
+            fechas: [],
             miscelaneas: []
           }
         },
         {
+          check: false,
           fecha: '10/03/2018',
           hora: '10:30 am',
           tipo: '',
@@ -262,6 +268,7 @@ const mutations = {
           dependencia: 'Investigación, Extención',
           respuesta: 'La fecha de inicio del proyecto es 3 de junio de 20018',
           observaciones: '',
+          pregunta: 'Cuál es la fecha de inicio del proyecto FE-002?',
           palabrasClave: [],
           palabrasCandidatas: [],
           palabrasRelevantes: [],
@@ -275,11 +282,12 @@ const mutations = {
             miscelaneas: []
           },
           entidadesRespuesta: {
-            fecha: [],
+            fechas: [],
             miscelaneas: []
           }
         },
         {
+          check: false,
           fecha: '10/03/2018',
           hora: '10:30 am',
           tipo: '',
@@ -287,6 +295,7 @@ const mutations = {
           dependencia: 'Extensión',
           respuesta: 'Maria Perez es la persona encargada de recepcionar los proyectos de extensión',
           observaciones: '',
+          pregunta: 'Quien es el encargado de recepcionar los proyectos de extensión?',
           palabrasClave: [],
           palabrasCandidatas: [],
           palabrasRelevantes: [],
@@ -300,7 +309,7 @@ const mutations = {
             miscelaneas: []
           },
           entidadesRespuesta: {
-            fecha: [],
+            fechas: [],
             miscelaneas: []
           }
         }
@@ -352,7 +361,11 @@ const actions = {
     axios.post(`${link}/c/postCognitiveModel`, data).then(response => console.log(response.data)).catch(err => EventBus.$emit('errorMessage', { text: `Error al comunicarse con el servidor: ${err}`, title: 'Error de servidor', boolean: true }))
     EventBus.$emit('loading', false)
     context.state.application.createModel = false
-    router.push('/UsingIA/palabraClave')
+    context.commit('changeStep', 'E')
+    EventBus.$emit('init', 'E')
+    let el = context.state.application.usingCM.steps['E'].data.find(el => el.to === '/UsingIA/palabraClave')
+    context.commit('changeElements', {to: '/UsingIA/palabraClave', el: el, i: 'E'})
+    // router.push('/UsingIA/palabraClave')
   },
   updateUser (context) {
     db.collection('users').doc(context.state.application.user.token).update(context.state.application.user)
@@ -378,7 +391,9 @@ const actions = {
       })
     } finally {
       EventBus.$emit('loading', false)
-      router.push('/UsingIA/temasDeInteres')
+      let el = context.state.application.usingCM.steps['E'].data.find(el => el.to === '/UsingIA/temasDeInteres')
+      context.commit('changeElements', {to: '/UsingIA/temasDeInteres', el: el, i: 'E'})
+      // router.push('/UsingIA/temasDeInteres')
     }
   },
   mode (context, mode) {
