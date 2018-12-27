@@ -10,7 +10,7 @@
       <v-flex column xs12 sm12 md12 class="py-3">
         <v-card light hover style="border-color: black">
           <v-card-title primary-title>
-            {{$store.state.app.application.user}}
+            <!-- {{$store.state.app.application.user}} -->
             <!-- {{$store.state.app.application.authenticated}} -->
             <div class="headline">Datos del Modelo</div>
           </v-card-title>

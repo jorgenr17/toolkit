@@ -1,11 +1,13 @@
 <template>
 	<v-container>
+		{{this.$store.state.app.model.contexto}}
 		<dialogo :addWord="addWord"/>
     <h1 class="pb-2" style="font-size: 35px">Cuales son tus palabras de Interés?</h1>
 		<v-divider></v-divider>
 		<v-layout row wrap class="mt-5">
       <v-flex column xs12 sm6 md6>
 				<div class="headline pa-2">Palabras Descartadas</div>
+				<!-- {{this.$store.state.app.model.contexto.palabrasCandidatas}} -->
 				<div class="elevation-7">
 					<v-alert v-model="alert" color="black">
 						<v-layout>
@@ -21,7 +23,7 @@
 				<v-card class="elevation-7" height="300px">
 					<v-card-text class="list">
 							<div v-for="(val, index) in this.$store.state.app.model.contexto.palabrasDescartadas" :key="index">
-								<v-chip @input="check(val, 'palabrasDescartadas', 'palabrasClave')" close color="primary" text-color="white">{{val}}</v-chip>
+								<v-chip @input="check(val, 'palabrasDescartadas', 'palabrasRelevantes')" close color="primary" text-color="white">{{val}}</v-chip>
 							</div>
 					</v-card-text>
 				</v-card>
@@ -41,8 +43,8 @@
 				</div>
 				<v-card class="elevation-7" height="300px">
 					<v-card-text class="list">
-						<div v-for="(val, index) in this.$store.state.app.model.contexto.palabrasCandidatas" :key="index">
-							<v-chip @input="check(val, 'palabrasClave', 'palabrasDescartadas')" close color="accent" text-color="white">{{val}}</v-chip>
+						<div v-for="(val, index) in this.$store.state.app.model.contexto.palabrasRelevantes" :key="index">
+							<v-chip @input="check(val, 'palabrasRelevantes', 'palabrasDescartadas')" close color="accent" text-color="white">{{val}}</v-chip>
 						</div>
 					</v-card-text>
 					<!-- <div class="pb-5"> -->

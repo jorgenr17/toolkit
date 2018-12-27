@@ -1,6 +1,20 @@
 <template>
 	<v-container>
-		<!-- <dialogo :addWord="addWord"/> -->
+
+		<v-dialog v-model="editQuestionText" max-width="500px" persistent>
+			<v-card>
+				<v-card-title class="headline">Agregar Categoria</v-card-title>
+				<v-card-text>
+					<v-textarea rows="2" label="Palabra a agregar" v-model="question"
+					placeholder color="accent" :persistent-hint="true"></v-textarea>
+				</v-card-text>
+				<v-card-actions>
+					<v-btn color="primary" flat @click="editQuestionText = false, obj.data.pregunta = question">Aceptar</v-btn>
+					<v-btn color="primary" flat @click="editQuestionText = false">Cancelar</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+
     <h1 class="pb-2" style="font-size: 35px">Preguntas</h1>
 		<v-divider></v-divider>
 		<v-layout row wrap class="mt-5">
@@ -45,7 +59,7 @@
 												<strong class="mb-0" style="font-size: 18px">Pregunta: </strong>{{obj.data.pregunta}}
 											</v-flex>
 											<v-flex column xs3 sm6 md1>
-												<v-btn @click="" icon flat small><v-icon size="22">edit</v-icon></v-btn>
+												<v-btn @click="editQuestion" icon flat small><v-icon size="22">edit</v-icon></v-btn>
 											</v-flex>
 										</v-layout>
 										<v-layout row wrap>
@@ -62,18 +76,35 @@
 			</v-flex>
 		</v-layout>
     <div class="text-xs-center">
-      <v-btn color="black" outline to="/UsingIA/questionsList">Siguiente</v-btn>
+      <v-btn color="black" outline @click="next('/UsingIA/questionsList')">Siguiente</v-btn>
     </div>
   </v-container>
 </template>
 
 <script>
+import EventBus from '@/components/EventBus'
+
 export default {
   name: 'questions',
   data: () => ({
     checkbox: false,
-    obj: null
-  })
+    obj: null,
+    question: '',
+    editQuestionText: false
+  }),
+  methods: {
+    next (to) {
+      let el = this.$store.state.app.application.usingCM.steps['P'].data.find(el => el.to === to)
+      this.$store.commit('app/changeElements', {to: to, el: el, i: 'P'})
+      this.$store.commit('app/changeStep', 'P')
+      EventBus.$emit('init', 'P')
+    },
+    editQuestion () {
+      this.question = this.obj.data.pregunta
+      this.editQuestionText = true
+    }
+  },
+  components: { EventBus }
 }
 </script>
 

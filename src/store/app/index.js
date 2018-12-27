@@ -54,9 +54,7 @@ const state = {
           active: 'disable',
           icon: 'fa-spinner',
           data: [
-            { icon: 'account_circle', text: 'Cargar Modelo', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' },
-            { icon: 'account_circle', text: 'Cargar Datos', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' },
-            { icon: 'account_circle', text: 'Iniciar Prueba', active: 'disable', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/PrepararDatos' }
+            { icon: 'question_answer', text: 'Probar Modelo', active: 'accent', color: 'accent', shadow: '#35CCCC', to: '/UsingIA/questionsList' }
           ]
         }
       }
@@ -155,6 +153,7 @@ const mutations = {
   },
   returnDataWithKeyWords: (state, data) => {
     state.model = data
+    // state.model.contexto.palabrasRelevantes = data.contexto.palabrasCandidatas
   },
   addCognitiveModel: (state, CognitiveModel) => {
     let cognitiveModel = { name: CognitiveModel.data.nombre, id: CognitiveModel.id }
@@ -375,14 +374,14 @@ const actions = {
     router.push('/UsingIA/palabraClave')
   },
   relationedWords (context, link) {
-    console.log(context.state.model.relaciones)
+    console.log(context.state.model)
     axios.defaults.headers.common['Authorization'] = context.state.application.user.carinaToken
     axios.post(`${link}/c/relationedWords`, context.state.model.relaciones).then(response => console.log(response.data)).catch(err => console.error(err))
     EventBus.$emit('loading', false)
   },
   createRelations (context) {
     try {
-      context.state.model.contexto.palabrasClave.map(word => {
+      context.state.model.contexto.palabrasCandidatas.map(word => {
         let a = {
           palabraClave: word,
           temasDeInteres: []

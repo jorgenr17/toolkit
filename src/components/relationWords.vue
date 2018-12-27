@@ -14,6 +14,7 @@
 		</v-dialog>
 
 		<v-layout row wrap>
+			<!-- <pre>{{this.$store.state.app.model}}</pre> -->
 			<v-flex d-flex xs12 sm12 md4 class="pa-1">
 				<v-card height="300px" class="elevation-7">
 					<v-toolbar card color="black" class="white--text">
