@@ -30,6 +30,7 @@ import footerToolkit from '@/components/footer'
 import axios from 'axios'
 import EventBus from '@/components/EventBus'
 import io from 'socket.io-client'
+import {url} from '../main'
 
 export default {
   name: 'Inicio',
@@ -46,13 +47,13 @@ export default {
       fondo,
       enlace,
       titulo,
-      socket: null,
-      url: 'https://carinag-225014.appspot.com'
+      socket: null
+      // url: 'https://carinag-225014.appspot.com'
     }
   },
   methods: {
     socketOn () {
-      this.socket = io(`${this.url}`)
+      this.socket = io(`${url}`)
       this.socket.on('clientConnect', (data) => {
         this.$store.commit('app/asignSocketId', data.idClient)
       })
@@ -61,18 +62,19 @@ export default {
       })
       this.socket.on('returnDataWithKeyWords', (data) => {
         console.log(data)
+        EventBus.$emit('loading', false)
         this.$store.commit('app/returnDataWithKeyWords', data)
         EventBus.$emit('loading', false)
       })
       this.socket.on('relationedWords', (data) => {
-        console.log(`respuesta: ${data}`)
+        console.log(data)
         // this.$store.commit('app/response', data)
         EventBus.$emit('loading', false)
       })
     },
     getToken () {
       if (this.$store.state.app.application.authenticated === false && this.$store.state.app.application.user.email !== '') {
-        axios.post(`${this.url}/user/auth`, {idUsuario: this.$store.state.app.application.user.email, idSocket: this.$store.state.app.application.sokedId}).then(response => {
+        axios.post(`${url}/user/auth`, {idUsuario: this.$store.state.app.application.user.email, idSocket: this.$store.state.app.application.sokedId}).then(response => {
           console.log(response.data)
         }).catch(err => console.log(err))
       }

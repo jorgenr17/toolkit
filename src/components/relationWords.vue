@@ -19,7 +19,7 @@
 				<v-card height="300px" class="elevation-7">
 					<v-toolbar card color="black" class="white--text">
 						<v-flex class="text-xs-center">
-							<v-toolbar-title style="font-size: 35px">Temas</v-toolbar-title>
+							<v-toolbar-title style="font-size: 28px">Palabras Claves</v-toolbar-title>
 						</v-flex>
 					</v-toolbar>
 					<v-card-text class="list">
@@ -38,7 +38,7 @@
 				<v-card height="300px" class="elevation-7">
 					<v-toolbar card color="black" class="white--text">
 						<v-flex class="text-xs-center">
-							<v-toolbar-title style="font-size: 35px">Categorias</v-toolbar-title>
+							<v-toolbar-title style="font-size: 28px">Categorías</v-toolbar-title>
 						</v-flex>
 					</v-toolbar>
 					<!-- <div class="pr-1"> -->
@@ -50,7 +50,7 @@
 						</v-chip>
 					</v-card-text>
 					<v-card-text v-else>
-						<div style="font-size: 16px; color: grey; text-align: center">No hay categorias para mostrar. Deseas agregar alguna?</div>
+						<div style="font-size: 16px; color: grey; text-align: center">No hay categorías para mostrar. Deseas agregar alguna?</div>
 					</v-card-text>
 				</v-card>
 			</v-flex>
@@ -59,11 +59,11 @@
 				<v-card height="300px" class="elevation-7">
 					<v-toolbar card color="black" class="white--text">
 						<v-flex class="text-xs-center">
-							<v-toolbar-title style="font-size: 35px">Palabras</v-toolbar-title>
+							<v-toolbar-title style="font-size: 28px">Palabras Relevantes</v-toolbar-title>
 						</v-flex>
 					</v-toolbar>
 					<v-card-text class="list">
-						<div v-if="category === ''" style="font-size: 16px; color: grey; text-align: center">Selecciona las palabras a relacionar con la categoria</div>
+						<div v-if="category === ''" style="font-size: 16px; color: grey; text-align: center">Selecciona las palabras relevantes a relacionar con la categoria</div>
 						<div v-else>
 							<v-scroll-x-transition group hide-on-leave>
 								<v-chip color="grey" dark small v-for="(value, i) in commonElements" :key="i" @click="asignWord(value.word)">{{value.word}}<v-icon v-if="value.val">check_circle</v-icon>
@@ -74,14 +74,18 @@
 				</v-card>
 			</v-flex>
 		</v-layout>
-		<div class="text-xs-center pa-5">
+		<!-- <div class="text-xs-center pa-5">
 			<v-btn @click="sendWords()" color="black" class="accent--text">Enviar Relaciones</v-btn>
-		</div>
+		</div> -->
+		<div class="text-xs-center">
+      <v-btn color="black" outline @click="next('/UsingIA/questions')">Siguiente</v-btn>
+    </div>
 	</v-container>
 </template>
 
 <script>
 import EventBus from '@/components/EventBus'
+import { url } from '../main'
 
 export default {
   name: 'relationWords',
@@ -92,10 +96,16 @@ export default {
     word: '',
     activo: false,
     category: '',
-    category2: '',
-    url: 'https://carinag-225014.appspot.com'
+    category2: ''
+    // url: 'https://carinag-225014.appspot.com'
   }),
   methods: {
+    next (to) {
+      let el = this.$store.state.app.application.usingCM.steps['E'].data.find(el => el.to === to)
+      this.$store.commit('app/changeElements', {to: to, el: el, i: 'E'})
+      this.$store.commit('app/changeStep', 'E')
+      EventBus.$emit('init', 'E')
+    },
     showChild (index) {
       this.child = index
     },
@@ -127,7 +137,7 @@ export default {
     },
     sendWords () {
       EventBus.$emit('loading', true)
-      this.$store.dispatch('app/relationedWords', this.url)
+      this.$store.dispatch('app/relationedWords', url)
     },
     active (index) {
       if (this.child === index) {
@@ -140,7 +150,7 @@ export default {
   computed: {
     commonElements () {
       let array = []
-      this.$store.state.app.model.contexto.palabrasCandidatas.map(word => {
+      this.$store.state.app.model.contexto.palabrasRelevantes.map(word => {
         let index = this.$store.state.app.model.relaciones[this.child].temasDeInteres[this.category].palabrasRelevantes.indexOf(word)
         if (index !== -1) {
           array.push({ word: word, val: true })

@@ -166,7 +166,7 @@ const mutations = {
     state.model.contexto[obj.key1].splice(index, 1)
   },
   addWord: (state, word) => {
-    state.model.contexto.palabrasClave.push(word)
+    state.model.contexto.palabrasRelevantes.push(word)
     // EventBus.$emit('addWord', false)
   },
   addCategory: (state, obj) => {
@@ -205,7 +205,7 @@ const mutations = {
     if (mode === 'DEMO') {
       let registros = [
         {
-          check: false,
+          check: true,
           fecha: '10/02/2018',
           hora: '10:30 am',
           tipo: '',
@@ -232,7 +232,7 @@ const mutations = {
           }
         },
         {
-          check: false,
+          check: true,
           fecha: '11/02/2018',
           hora: '10:30 am',
           tipo: '',
@@ -259,13 +259,13 @@ const mutations = {
           }
         },
         {
-          check: false,
+          check: true,
           fecha: '10/03/2018',
           hora: '10:30 am',
           tipo: '',
           solicitud: 'Cuál es la fecha de inicio del proyecto FE-002',
           dependencia: 'Investigación, Extención',
-          respuesta: 'La fecha de inicio del proyecto es 3 de junio de 20018',
+          respuesta: 'La fecha de inicio del proyecto es 3 de junio de 2018',
           observaciones: '',
           pregunta: 'Cuál es la fecha de inicio del proyecto FE-002?',
           palabrasClave: [],
@@ -286,7 +286,7 @@ const mutations = {
           }
         },
         {
-          check: false,
+          check: true,
           fecha: '10/03/2018',
           hora: '10:30 am',
           tipo: '',
@@ -319,7 +319,16 @@ const mutations = {
     }
   },
   csv: (state, array) => {
+    // console.log(array)
     state.model.registros = array
+  },
+  addWordToRegister: (state, data) => {
+    let index = state.model.registros[data.index].preguntasGeneradas.palabrasRelevantes.indexOf(data.val)
+    if (index === -1) {
+      state.model.registros[data.index].preguntasGeneradas.palabrasRelevantes.push(data.val)
+    } else {
+      state.model.registros[data.index].preguntasGeneradas.palabrasRelevantes.splice(index, 1)
+    }
   }
 }
 
@@ -357,8 +366,7 @@ const actions = {
   procesingCognitiveModel (context, link) {
     let data = context.state.model
     axios.defaults.headers.common['Authorization'] = context.state.application.user.carinaToken
-    axios.post(`${link}/c/postCognitiveModel`, data).then(response => console.log(response.data)).catch(err => EventBus.$emit('errorMessage', { text: `Error al comunicarse con el servidor: ${err}`, title: 'Error de servidor', boolean: true }))
-    EventBus.$emit('loading', false)
+    axios.post(`${link}/c/postCognitiveModel/`, data).then(response => console.log(response.data)).catch(err => EventBus.$emit('errorMessage', { text: `Error al comunicarse con el servidor: ${err}`, title: 'Error de servidor', boolean: true }))
     context.state.application.createModel = false
     context.commit('changeStep', 'E')
     EventBus.$emit('init', 'E')
@@ -374,25 +382,27 @@ const actions = {
     router.push('/UsingIA/palabraClave')
   },
   relationedWords (context, link) {
-    console.log(context.state.model)
     axios.defaults.headers.common['Authorization'] = context.state.application.user.carinaToken
-    axios.post(`${link}/c/relationedWords`, context.state.model.relaciones).then(response => console.log(response.data)).catch(err => console.error(err))
+    axios.post(`${link}/c/relationedWords`, context.state.model).then(response => console.log(response.data)).catch(err => EventBus.$emit('errorMessage', { text: `Error al comunicarse con el servidor: ${err}`, title: 'Error de servidor', boolean: true }))
+    router.push('/UsingIA/questions')
     EventBus.$emit('loading', false)
   },
   createRelations (context) {
-    try {
-      context.state.model.contexto.palabrasCandidatas.map(word => {
-        let a = {
-          palabraClave: word,
-          temasDeInteres: []
-        }
-        context.state.model.relaciones.push(a)
-      })
-    } finally {
-      EventBus.$emit('loading', false)
-      let el = context.state.application.usingCM.steps['E'].data.find(el => el.to === '/UsingIA/temasDeInteres')
-      context.commit('changeElements', {to: '/UsingIA/temasDeInteres', el: el, i: 'E'})
-      // router.push('/UsingIA/temasDeInteres')
+    if (context.state.model.relaciones.length === 0) {
+      try {
+        context.state.model.contexto.palabrasClave.map(word => {
+          let a = {
+            palabraClave: word,
+            temasDeInteres: []
+          }
+          context.state.model.relaciones.push(a)
+        })
+      } finally {
+        EventBus.$emit('loading', false)
+        let el = context.state.application.usingCM.steps['E'].data.find(el => el.to === '/UsingIA/temasDeInteres')
+        context.commit('changeElements', {to: '/UsingIA/temasDeInteres', el: el, i: 'E'})
+        // router.push('/UsingIA/temasDeInteres')
+      }
     }
   },
   mode (context, mode) {

@@ -53,6 +53,9 @@ const config = {
   // messagingSenderId: '5594732113'
 }
 
+// 'https://carinag-225014.appspot.com'
+const url = 'https://carinag-225014.appspot.com'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -64,11 +67,10 @@ new Vue({
   template: '<App/>'
 })
 // 'http://172.19.0.56:3000'
-
 const firebaseApp = firebase.initializeApp(config)
 const db = firebaseApp.firestore()
 const auth = firebaseApp.auth()
 db.settings({timestampsInSnapshots: true})
 const storage = firebase.storage()
 
-export {db, auth, storage}
+export {db, auth, storage, url}

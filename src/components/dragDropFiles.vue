@@ -59,6 +59,24 @@ export default {
           }
         }
         if (Object.keys(obj).length !== 0) {
+          obj.tipo = ''
+          obj.palabrasClave = []
+          obj.palabrasCandidatas = []
+          obj.palabrasRelevantes = []
+          obj.palabrsCompuestas = []
+          obj.palabrasDescartadas = []
+          obj.verbosSolcitudes = []
+          obj.pregunta = '',
+          obj.categorias = [],
+          obj.entidadesSolicitud = {
+            fechas: [],
+            lugares: [],
+            miscelaneas: []
+          },
+          obj.entidadesRespuesta = {
+            fechas: [],
+            miscelaneas: []
+          }
           array.push(obj)
           obj = {}
         }

@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		{{this.$store.state.app.model.contexto}}
+		<!-- {{this.$store.state.app.application.user}} -->
 		<dialogo :addWord="addWord"/>
     <h1 class="pb-2" style="font-size: 35px">Cuales son tus palabras de Interés?</h1>
 		<v-divider></v-divider>

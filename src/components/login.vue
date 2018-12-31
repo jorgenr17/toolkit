@@ -43,7 +43,7 @@ export default {
       password: '',
       errorMessage: false,
       message: null,
-      url: 'https://carinag-225014.appspot.com',
+      // url: 'https://carinag-225014.appspot.com',
       passwordRules: [v => !!v || 'Contraseña requerida'],
       emailRules: [
         v => !!v || 'Se requiere una cuenta de correo electrónico.',

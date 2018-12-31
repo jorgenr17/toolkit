@@ -40,13 +40,14 @@
 
 <script>
 import EventBus from '@/components/EventBus'
+import { url } from '../main'
 
 export default {
   name: 'DefinirModelo',
   data: () => ({
     palabraClave: '',
     loading: false,
-    url: 'https://carinag-225014.appspot.com',
+    // url: 'https://carinag-225014.appspot.com',
     text: 'Ejemplo: Rubro / Palabras agregadas: ',
     perH: false
   }),
@@ -58,7 +59,7 @@ export default {
     },
     sendModel () {
       EventBus.$emit('loading', true)
-      this.$store.dispatch('app/addingCognitiveModel', this.url)
+      this.$store.dispatch('app/addingCognitiveModel', url)
     },
     UpdateModel () {
       EventBus.$emit('loading', true)
